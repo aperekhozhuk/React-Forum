@@ -30,14 +30,31 @@ class NewPostPage extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.submitForm.bind(this)} style={{display: 'flex', flexDirection: 'column'}}>
-          <input name="title" type="text" placeholder="Post title" required></input><br></br><br></br>
-          <textarea name="body" rows="20" placeholder="Post body" required></textarea><br></br>
-          <p>{this.state.alert}</p>
-          <input type="submit" value="Add post"></input>
-        </form>
-      </div>
+      <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+        <div className="form-group">
+          <label>Title</label>
+          <input
+            name="title"
+            type="text"
+            className="form-control"
+            placeholder="Enter title"
+            required>
+          </input>
+        </div>
+        <div className="form-group">
+          <label>Text</label>
+          <textarea
+            name="body"
+            type="text"
+            className="form-control"
+            placeholder="Enter text"
+            rows="10"
+            required>
+          </textarea>
+        </div>
+        <p>{this.state.alert}</p>
+        <button type="submit" className="btn btn-primary">Create Post</button>
+      </form>
     )
   }
 }

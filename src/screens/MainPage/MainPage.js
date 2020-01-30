@@ -17,11 +17,11 @@ class MainPage extends Component {
 
   render() {
     return (
-      <ul>
+      <div className="container my-5">
         {this.state.posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
-      </ul>
+      </div>
     )
   }
 }

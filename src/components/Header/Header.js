@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class Header extends Component {
   render() {
     return (
-      <div style={{border: '5px solid blue', marginBottom: '20px'}}>
-        Just header
-      </div>
+      <header className="jumbotron mb-0 p-3 bg-muted">
+        <h1 className="text-info">Welcome to main page!</h1>
+      </header>
     )
   }
 }

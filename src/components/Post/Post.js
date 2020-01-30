@@ -7,11 +7,9 @@ class Post extends Component {
     const { id, title, userId } = this.props.post
 
     return (
-      <div>
+      <div className="border-bottom border-secondary p-4">
         <h4>User #{userId}</h4>
-        <Link style={{textDecoration: 'none', color: 'green', fontSize: '1.5em'}} to={`/posts/${id}`}>{title}</Link>
-        <br></br>
-        <hr></hr>
+        <Link to={`/posts/${id}`} className="text-decoration-none">{title}</Link>
       </div>
     )
   }

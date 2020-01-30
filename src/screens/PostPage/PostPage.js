@@ -18,15 +18,13 @@ class PostPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container mt-5">
         { this.state.error? (
           <p>Not found</p>
         ) : (
           <Fragment>
-            <h3>Posted by user with id: {this.state.post.userId}</h3>
-            <hr></hr>
-            <h1>{this.state.post.title}</h1>
-            <hr></hr>
+            <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.userId}</h5>
+            <h1 className="mb-4 mt-3">{this.state.post.title}</h1>
             <p>{this.state.post.body}</p>
           </Fragment>
         )}

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 class Navbar extends Component {
   render() {
     return (
-      <div style={{border: '5px solid red', marginBottom: '20px'}}>
-          <Link style={{padding: '20px'}} to="/">Main Page</Link>
-          <Link to="/posts/new">Create new post</Link>
+      <div className="d-flex bg-dark">
+          <Link className="p-3 text-decoration-none nav-link" to="/">Main Page</Link>
+          <Link className="p-3 text-decoration-none nav-link" to="/posts/new">Create new post</Link>
       </div>
     )
   }
