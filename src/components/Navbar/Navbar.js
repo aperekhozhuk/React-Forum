@@ -5,7 +5,7 @@ class Navbar extends Component {
   render() {
     return (
       <div style={{border: '5px solid red', marginBottom: '20px'}}>
-          <Link to="/">Main Page</Link>
+          <Link style={{padding: '20px'}} to="/">Main Page</Link>
           <Link to="/posts/new">Create new post</Link>
       </div>
     )
