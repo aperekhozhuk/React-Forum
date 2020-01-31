@@ -5,6 +5,7 @@ import NewPostPage from './screens/NewPostPage/NewPostPage';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 
 class App extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
 
           <Redirect to="/" />
         </Switch>
+        <Footer />
       </Router>
     )
   }

@@ -17,7 +17,7 @@ class MainPage extends Component {
 
   render() {
     return (
-      <div className="container my-5">
+      <div className="container my-5 pb-5">
         {this.state.posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
