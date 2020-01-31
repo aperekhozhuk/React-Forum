@@ -4,13 +4,14 @@ import axios from 'axios'
 class PostPage extends Component {
   state = {
     post: {},
-    error: false
+    error: false,
+    isLoaded: false
   }
 
   componentDidMount() {
     axios.get(
       `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`
-    ).then(res => this.setState({ post: res.data }))
+    ).then(res => this.setState({ post: res.data, isLoaded: true }))
     .catch( error =>
       this.setState( {error: true})
     );
@@ -22,11 +23,15 @@ class PostPage extends Component {
         { this.state.error? (
           <p>Not found</p>
         ) : (
-          <Fragment>
-            <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.userId}</h5>
-            <h1 className="mb-4 mt-3">{this.state.post.title}</h1>
-            <p>{this.state.post.body}</p>
-          </Fragment>
+          this.state.isLoaded? (
+            <Fragment>
+              <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.userId}</h5>
+              <h1 className="mb-4 mt-3">{this.state.post.title}</h1>
+              <p>{this.state.post.body}</p>
+            </Fragment>
+          ) : (
+            <p>Loading, please wait</p>
+          )
         )}
       </div>
     )
