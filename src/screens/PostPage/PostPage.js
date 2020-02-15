@@ -10,7 +10,7 @@ class PostPage extends Component {
 
   componentDidMount() {
     axios.get(
-      `https://jsonplaceholder.typicode.com/posts/${this.props.match.params.id}`
+      `http://localhost:5000/articles/${this.props.match.params.id}`
     ).then(res => this.setState({ post: res.data, isLoaded: true }))
     .catch( error =>
       this.setState( {error: true})
@@ -25,9 +25,12 @@ class PostPage extends Component {
         ) : (
           this.state.isLoaded? (
             <Fragment>
-              <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.userId}</h5>
+              <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.user_id}</h5>
+              <hr></hr>
               <h1 className="mb-4 mt-3">{this.state.post.title}</h1>
-              <p>{this.state.post.body}</p>
+              <p>{this.state.post.text}</p>
+              <hr></hr>
+              <p>Posted: {this.state.post.date_posted}</p>
             </Fragment>
           ) : (
             <p>Loading, please wait</p>

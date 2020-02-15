@@ -12,7 +12,7 @@ class MainPage extends Component {
 
   componentDidMount() {
     axios.get(
-      'https://jsonplaceholder.typicode.com/posts?_limit=200'
+      'http://localhost:5000/articles'
     ).then(res => this.setState({ posts: res.data, isLoaded: true }))
   }
 

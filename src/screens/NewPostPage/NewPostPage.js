@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
+
 
 class NewPostPage extends Component {
   state = {
-    alert: ''
+    alert: '',
+    token: Cookies.get('access-token')
   }
 
   submitForm(e) {
@@ -11,20 +14,20 @@ class NewPostPage extends Component {
     this.setState({alert: ''})
 
     const data = {
-      'userId': 1,
       'title': e.target.title.value,
-      'body': e.target.body.value
+      'text': e.target.body.value,
+      'access-token': this.state.token
     }
     const headers = {
       'Content-Type': 'application/json',
     }
 
-    axios.post('https://jsonplaceholder.typicode.com/posts', data, {
+    axios.post('http://localhost:5000/articles/new', data, {
       headers: headers
     })
     .then(res => this.setState({alert: 'Added'}))
     .catch( error =>
-      this.setState({alert: 'Error'})
+      this.setState({alert: error.response.data.error})
     );
   }
 

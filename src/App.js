@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import Login from './screens/Login/Login'
+import Register from './screens/Register/Register'
 
 
 class App extends Component {
@@ -20,13 +22,23 @@ class App extends Component {
           )}>
           </Route>
 
-          <Route exact path="/posts/new"render={ (props) => (
+          <Route exact path="/posts/new" render={ (props) => (
             <NewPostPage />
           )}>
           </Route>
 
           <Route path="/posts/:id([1-9][0-9]*)" render={ (props) => (
             <PostPage {...props}/>
+          )}>
+          </Route>
+
+          <Route exact path="/login" render={ (props) => (
+            <Login />
+          )}>
+          </Route>
+
+          <Route exact path="/register" render={ (props) => (
+            <Register />
           )}>
           </Route>
 
