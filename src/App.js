@@ -8,7 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Login from './screens/Login/Login'
 import Register from './screens/Register/Register'
-
+import UserProfile from './screens/UserProfile/UserProfile'
 
 class App extends Component {
   render() {
@@ -39,6 +39,11 @@ class App extends Component {
 
           <Route exact path="/register" render={ (props) => (
             <Register />
+          )}>
+          </Route>
+
+          <Route path="/users/:id([1-9][0-9]*)" render={ (props) => (
+            <UserProfile {...props}/>
           )}>
           </Route>
 

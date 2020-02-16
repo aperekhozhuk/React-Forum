@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+
 
 class PostPage extends Component {
   state = {
@@ -25,12 +27,19 @@ class PostPage extends Component {
         ) : (
           this.state.isLoaded? (
             <Fragment>
-              <h5><span className="font-italic">Posted by user with id: </span>{this.state.post.user_id}</h5>
               <hr></hr>
-              <h1 className="mb-4 mt-3">{this.state.post.title}</h1>
-              <p>{this.state.post.text}</p>
+              <h1 className="mb-4 mt-3 text-success">{this.state.post.title}</h1>
+              <p className="text-primary">{this.state.post.text}</p>
               <hr></hr>
-              <p>Posted: {this.state.post.date_posted}</p>
+              <div>
+                <span className="font-italic">Posted by: </span>
+                <Link to={`/users/${this.state.post.user_id}`}>
+                  <span className="btn text-primary">
+                    {this.state.post['author.username']}
+                  </span>
+                </Link>
+                <span> | at {this.state.post.date_posted}</span>
+              </div>
             </Fragment>
           ) : (
             <p>Loading, please wait</p>
