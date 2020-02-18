@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 
 class Register extends Component {
@@ -38,28 +39,34 @@ class Register extends Component {
 
   render() {
     return (
-      <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
-        <div className="form-group">
-          <input
-            name="username"
-            type="text"
-            className="form-control"
-            placeholder="Enter your username"
-            required>
-          </input>
-        </div>
-        <div className="form-group">
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            placeholder="Enter your password"
-            required>
-          </input>
-        </div>
-        <p>{this.state.alert}</p>
-        <button type="submit" className="btn btn-primary">Sign up</button>
-      </form>
+      <div className="container pt-5">
+        <p>Please, sign up for ability to create own posts</p>
+        <p>Already have account?
+        <Link to="/login" className="text-decoration-none">  Sign in, please</Link>
+        </p>
+        <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+          <div className="form-group">
+            <input
+              name="username"
+              type="text"
+              className="form-control"
+              placeholder="Enter your username"
+              required>
+            </input>
+          </div>
+          <div className="form-group">
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              placeholder="Enter your password"
+              required>
+            </input>
+          </div>
+          <p>{this.state.alert}</p>
+          <button type="submit" className="btn btn-primary">Sign up</button>
+        </form>
+      </div>
     )
   }
 }

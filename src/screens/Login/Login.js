@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { Link } from 'react-router-dom';
 
 
 class Login extends Component {
@@ -42,28 +43,34 @@ class Login extends Component {
   }
   render() {
     return (
-      <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
-        <div className="form-group">
-          <input
-            name="username"
-            type="text"
-            className="form-control"
-            placeholder="Enter your username"
-            required>
-          </input>
-        </div>
-        <div className="form-group">
-          <input
-            name="password"
-            type="password"
-            className="form-control"
-            placeholder="Enter your password"
-            required>
-          </input>
-        </div>
-        <p>{this.state.alert}</p>
-        <button type="submit" className="btn btn-primary">Login</button>
-      </form>
+      <div className="container pt-5">
+        <p>Please, log in your account</p>
+        <p>Don't have?
+        <Link to="/login" className="text-decoration-none">  Sign up, please</Link>
+        </p>
+        <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+          <div className="form-group">
+            <input
+              name="username"
+              type="text"
+              className="form-control"
+              placeholder="Enter your username"
+              required>
+            </input>
+          </div>
+          <div className="form-group">
+            <input
+              name="password"
+              type="password"
+              className="form-control"
+              placeholder="Enter your password"
+              required>
+            </input>
+          </div>
+          <p>{this.state.alert}</p>
+          <button type="submit" className="btn btn-primary">Login</button>
+        </form>
+      </div>
     )
   }
 }
