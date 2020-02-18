@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import MainPage from './screens/MainPage/MainPage';
 import PostPage from './screens/PostPage/PostPage';
 import NewPostPage from './screens/NewPostPage/NewPostPage';
@@ -21,7 +21,9 @@ class App extends Component {
       username : '',
       userLoaded : false
     }
+
     this.setUser = this.setUser.bind(this)
+    this.unSetUser = this.unSetUser.bind(this)
 
     const headers = {
       'Content-Type': 'application/json',
@@ -46,11 +48,24 @@ class App extends Component {
     })
   }
 
+  unSetUser() {
+    Cookies.remove('access-token')
+    this.setState({
+      token: '',
+      username : ''
+    })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <Header />
-        <Navbar username={this.state.username} userLoaded={this.state.userLoaded}/>
+        <Navbar
+          username={this.state.username}
+          userLoaded={this.state.userLoaded}
+          unSetUser={this.unSetUser}
+        />
+
         <Switch>
           <Route exact path="/" render={ (props) => (
             <MainPage />
@@ -66,16 +81,19 @@ class App extends Component {
             <PostPage {...props}/>
           )}>
           </Route>
+          { !this.state.username && this.state.userLoaded &&
+            <Fragment>
+              <Route exact path="/login" render={ (props) => (
+                <Login history={props.history} setUser={this.setUser}/>
+              )}>
+              </Route>
 
-          <Route exact path="/login" render={ (props) => (
-            <Login history={props.history} setUser={this.setUser}/>
-          )}>
-          </Route>
-
-          <Route exact path="/register" render={ (props) => (
-            <Register history={props.history}/>
-          )}>
-          </Route>
+              <Route exact path="/register" render={ (props) => (
+                <Register history={props.history}/>
+              )}>
+              </Route>
+            </Fragment>
+          }
 
           <Route path="/users/:id([1-9][0-9]*)" render={ (props) => (
             <UserProfile {...props}/>

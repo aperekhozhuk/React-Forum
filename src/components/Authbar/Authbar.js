@@ -10,7 +10,6 @@ class Authbar extends Component {
       username: props.username,
       userLoaded: props.userLoaded
     };
-    this.logout = this.logout.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -22,21 +21,20 @@ class Authbar extends Component {
     }
   }
 
-  logout(event) {
-    this.setState({
-      username: null,
-      userLoaded: true
-    })
-    Cookies.remove('access-token')
-  }
-
   render() {
     return (
       <div className="d-flex bg-dark">
         { this.state.username? (
           <Fragment>
-            <Link className="p-3 px-5 text-decoration-none nav-link" to="/profile">Hello, {this.state.username}</Link>
-            <Link className="p-3 px-5 text-decoration-none nav-link" to="/logout" onClick={this.logout}>Logout</Link>
+            <Link
+              className="p-3 px-5 text-decoration-none nav-link"
+              to="/profile">Hello, {this.state.username}
+            </Link>
+            <Link
+              className="p-3 px-5 text-decoration-none nav-link"
+              to="/"
+              onClick={this.props.unSetUser}>Logout
+            </Link>
           </Fragment>
         ) : (
           <Fragment>
