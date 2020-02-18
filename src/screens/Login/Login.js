@@ -33,6 +33,7 @@ class Login extends Component {
     this.form.username.value = ''
     this.form.password.value = ''
     Cookies.set('access-token', response.data['access-token'])
+    this.props.setUser(response.data.username)
   }
 
   login_failed(error) {

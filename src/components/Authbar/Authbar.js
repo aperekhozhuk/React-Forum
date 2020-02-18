@@ -9,8 +9,8 @@ class Authbar extends Component {
     super(props);
     this.state = {
       token: Cookies.get('access-token'),
-      username: null,
-      loaded: false
+      username: props.username,
+      userLoaded: props.userLoaded
     };
 
     this.logout = this.logout.bind(this)
@@ -24,14 +24,23 @@ class Authbar extends Component {
     })
     .then(res => this.setState({username: res.data.username }))
     .catch( error =>
-      this.setState({loaded: true})
+      this.setState({userLoaded: true})
     );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.username !== prevProps.username ) {
+      this.setState({
+        username: this.props.username,
+        userLoaded: this.props.userLoaded
+      })
+    }
   }
 
   logout(event) {
     this.setState({
       username: null,
-      loaded: true
+      userLoaded: true
     })
     Cookies.remove('access-token')
   }
@@ -46,7 +55,7 @@ class Authbar extends Component {
           </Fragment>
         ) : (
           <Fragment>
-            { this.state.loaded? (
+            { this.state.userLoaded? (
               <Fragment>
                 <Link className="p-3 px-5 text-decoration-none nav-link" to="/login">Login</Link>
                 <Link className="p-3 px-5 text-decoration-none nav-link" to="/register">Register</Link>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MainPage from './screens/MainPage/MainPage';
 import PostPage from './screens/PostPage/PostPage';
 import NewPostPage from './screens/NewPostPage/NewPostPage';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -11,11 +11,27 @@ import Register from './screens/Register/Register'
 import UserProfile from './screens/UserProfile/UserProfile'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username : '',
+      userLoaded : false
+    }
+    this.setUser = this.setUser.bind(this)
+  }
+
+  setUser(username) {
+    this.setState({
+      username: username,
+      userLoaded: true
+    })
+  }
+
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Header />
-        <Navbar />
+        <Navbar username={this.state.username} userLoaded={this.state.userLoaded}/>
         <Switch>
           <Route exact path="/" render={ (props) => (
             <MainPage />
@@ -33,7 +49,7 @@ class App extends Component {
           </Route>
 
           <Route exact path="/login" render={ (props) => (
-            <Login />
+            <Login setUser={this.setUser}/>
           )}>
           </Route>
 
@@ -50,7 +66,7 @@ class App extends Component {
           <Redirect to="/" />
         </Switch>
         <Footer />
-      </Router>
+      </BrowserRouter>
     )
   }
 }

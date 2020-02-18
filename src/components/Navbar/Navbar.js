@@ -11,7 +11,7 @@ class Navbar extends Component {
             <Link className="p-3 text-decoration-none nav-link" to="/">Main Page</Link>
             <Link className="p-3 text-decoration-none nav-link" to="/posts/new">Create new post</Link>
         </div>
-        <Authbar />
+        <Authbar username={this.props.username} userLoaded={this.props.userLoaded}/>
       </div>
     )
   }
