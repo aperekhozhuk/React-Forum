@@ -29,7 +29,7 @@ class Register extends Component {
   signup_succes(response) {
     this.form.username.value = ''
     this.form.password.value = ''
-    this.setState({ alert: 'Congratulations! Now you can login'})
+    this.props.history.push("/login")
   }
 
   signup_failed(error) {

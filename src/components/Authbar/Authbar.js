@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios'
 import Cookies from 'js-cookie'
 
 class Authbar extends Component {
@@ -8,28 +7,14 @@ class Authbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: Cookies.get('access-token'),
       username: props.username,
       userLoaded: props.userLoaded
     };
-
     this.logout = this.logout.bind(this)
-
-    const headers = {
-      'Content-Type': 'application/json',
-    }
-    const data = {'access-token': this.state.token }
-    axios.post('http://localhost:5000/verify-token', data, {
-      headers: headers,
-    })
-    .then(res => this.setState({username: res.data.username }))
-    .catch( error =>
-      this.setState({userLoaded: true})
-    );
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.username !== prevProps.username ) {
+    if (this.props !== prevProps) {
       this.setState({
         username: this.props.username,
         userLoaded: this.props.userLoaded

@@ -25,7 +25,7 @@ class NewPostPage extends Component {
     axios.post('http://localhost:5000/articles/new', data, {
       headers: headers
     })
-    .then(res => this.setState({alert: 'Added'}))
+    .then(res => this.props.history.push(`/posts/${res.data.id}`))
     .catch( error =>
       this.setState({alert: error.response.data.error})
     );

@@ -9,15 +9,34 @@ import Footer from './components/Footer/Footer';
 import Login from './screens/Login/Login'
 import Register from './screens/Register/Register'
 import UserProfile from './screens/UserProfile/UserProfile'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      token: Cookies.get('access-token'),
       username : '',
       userLoaded : false
     }
     this.setUser = this.setUser.bind(this)
+
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    const data = {'access-token': this.state.token }
+    axios.post('http://localhost:5000/verify-token', data, {
+      headers: headers,
+    })
+    .then(res => this.setState({
+      username: res.data.username,
+      userLoaded: true
+    }))
+    .catch( error =>
+      this.setState({userLoaded: true})
+    );
   }
 
   setUser(username) {
@@ -39,7 +58,7 @@ class App extends Component {
           </Route>
 
           <Route exact path="/posts/new" render={ (props) => (
-            <NewPostPage />
+            <NewPostPage history={props.history}/>
           )}>
           </Route>
 
@@ -49,12 +68,12 @@ class App extends Component {
           </Route>
 
           <Route exact path="/login" render={ (props) => (
-            <Login setUser={this.setUser}/>
+            <Login history={props.history} setUser={this.setUser}/>
           )}>
           </Route>
 
           <Route exact path="/register" render={ (props) => (
-            <Register />
+            <Register history={props.history}/>
           )}>
           </Route>
 
