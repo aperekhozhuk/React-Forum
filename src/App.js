@@ -11,6 +11,7 @@ import Register from './screens/Register/Register'
 import UserProfile from './screens/UserProfile/UserProfile'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import './App.css'
 
 
 class App extends Component {
@@ -59,49 +60,49 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Header />
-        <Navbar
-          username={this.state.username}
-          userLoaded={this.state.userLoaded}
-          unSetUser={this.unSetUser}
-        />
+        <div className="fixed-top">
+          <Header />
+          <Navbar
+            username={this.state.username}
+            userLoaded={this.state.userLoaded}
+            unSetUser={this.unSetUser}
+          />
+        </div>
+        <div className="content">
+          <Switch>
+            <Route exact path="/" render={ (props) => (
+              <MainPage />
+            )}>
+            </Route>
 
-        <Switch>
-          <Route exact path="/" render={ (props) => (
-            <MainPage />
-          )}>
-          </Route>
+            <Route exact path="/posts/new" render={ (props) => (
+              <NewPostPage history={props.history}/>
+            )}>
+            </Route>
 
-          <Route exact path="/posts/new" render={ (props) => (
-            <NewPostPage history={props.history}/>
-          )}>
-          </Route>
+            <Route path="/posts/:id([1-9][0-9]*)" render={ (props) => (
+              <PostPage {...props}/>
+            )}>
+            </Route>
 
-          <Route path="/posts/:id([1-9][0-9]*)" render={ (props) => (
-            <PostPage {...props}/>
-          )}>
-          </Route>
-          { !this.state.username && this.state.userLoaded &&
-            <Fragment>
-              <Route exact path="/login" render={ (props) => (
-                <Login history={props.history} setUser={this.setUser}/>
-              )}>
-              </Route>
+            <Route exact path="/login" render={ (props) => (
+              <Login history={props.history} setUser={this.setUser}/>
+            )}>
+            </Route>
 
-              <Route exact path="/register" render={ (props) => (
-                <Register history={props.history}/>
-              )}>
-              </Route>
-            </Fragment>
-          }
+            <Route exact path="/register" render={ (props) => (
+              <Register history={props.history}/>
+            )}>
+            </Route>
 
-          <Route path="/users/:id([1-9][0-9]*)" render={ (props) => (
-            <UserProfile {...props}/>
-          )}>
-          </Route>
+            <Route path="/users/:id([1-9][0-9]*)" render={ (props) => (
+              <UserProfile {...props}/>
+            )}>
+            </Route>
 
-          <Redirect to="/" />
-        </Switch>
+            <Redirect to="/" />
+          </Switch>
+        </div>
         <Footer />
       </BrowserRouter>
     )

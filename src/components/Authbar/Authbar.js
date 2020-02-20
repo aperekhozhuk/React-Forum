@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie'
 
 class Authbar extends Component {
 
@@ -23,15 +22,15 @@ class Authbar extends Component {
 
   render() {
     return (
-      <div className="d-flex bg-dark">
+      <Fragment>
         { this.state.username? (
           <Fragment>
             <Link
-              className="p-3 px-5 text-decoration-none nav-link"
+              className="p-3 text-decoration-none nav-link"
               to="/profile">Hello, {this.state.username}
             </Link>
             <Link
-              className="p-3 px-5 text-decoration-none nav-link"
+              className="p-3 text-decoration-none nav-link"
               to="/"
               onClick={this.props.unSetUser}>Logout
             </Link>
@@ -40,8 +39,8 @@ class Authbar extends Component {
           <Fragment>
             { this.state.userLoaded? (
               <Fragment>
-                <Link className="p-3 px-5 text-decoration-none nav-link" to="/login">Login</Link>
-                <Link className="p-3 px-5 text-decoration-none nav-link" to="/register">Register</Link>
+                <Link className="p-3 text-decoration-none nav-link" to="/login">Login</Link>
+                <Link className="p-3 text-decoration-none nav-link" to="/register">Register</Link>
               </Fragment>
             ) : (
               <Fragment></Fragment>
@@ -49,7 +48,7 @@ class Authbar extends Component {
           </Fragment>
         )
       }
-      </div>
+      </Fragment>
     )
   }
 }
