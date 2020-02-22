@@ -24,10 +24,14 @@ class Navbar extends Component {
   render() {
     return (
       <div className="nav-bar row d-flex bg-dark justify-content-between">
-        <div className="d-flex bg-dark col-12 col-sm-6 justify-content-start">
-            <Link className="p-3 text-decoration-none nav-link" to="/">Main Page</Link>
-            <Link className="p-3 text-decoration-none nav-link" to="/posts/new">Create new post</Link>
-        </div>
+        { this.state.userLoaded &&
+          <div className="d-flex bg-dark col-12 col-sm-6 justify-content-start">
+              <Link className="p-3 text-decoration-none nav-link" to="/">Main Page</Link>
+              { this.state.username &&
+                <Link className="p-3 text-decoration-none nav-link" to="/posts/new">Create new post</Link>
+              }
+          </div>
+        }
         <div className="d-flex bg-dark col-12 col-sm-6 justify-content-end">
           <Authbar
             username={this.state.username}

@@ -1,12 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 
 class Login extends Component {
-  state = {
-    alert: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+      alert: '',
+      username: props.username,
+      userLoaded: props.userLoaded
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props !== prevProps) {
+      this.setState({
+        username: this.props.username,
+        userLoaded: this.props.userLoaded
+      })
+    }
   }
 
   submitForm(e) {
@@ -34,7 +48,7 @@ class Login extends Component {
     this.form.username.value = ''
     this.form.password.value = ''
     Cookies.set('access-token', response.data['access-token'])
-    this.props.setUser(response.data.username)
+    this.props.setUser(response.data)
     this.props.history.push("/")
   }
 
@@ -43,34 +57,45 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className="container pt-5">
-        <p>Please, log in your account</p>
-        <p>Don't have?
-        <Link to="/login" className="text-decoration-none">  Sign up, please</Link>
-        </p>
-        <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
-          <div className="form-group">
-            <input
-              name="username"
-              type="text"
-              className="form-control"
-              placeholder="Enter your username"
-              required>
-            </input>
+      <Fragment>
+        { !this.state.username && this.state.userLoaded &&
+          <div className="container pt-5">
+            <p>Please, log in your account</p>
+            <p>Don't have?
+            <Link to="/register" className="text-decoration-none">  Sign up, please</Link>
+            </p>
+            <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+              <div className="form-group">
+                <input
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  required>
+                </input>
+              </div>
+              <div className="form-group">
+                <input
+                  name="password"
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  required>
+                </input>
+              </div>
+              <p>{this.state.alert}</p>
+              <button type="submit" className="btn btn-primary">Login</button>
+            </form>
           </div>
-          <div className="form-group">
-            <input
-              name="password"
-              type="password"
-              className="form-control"
-              placeholder="Enter your password"
-              required>
-            </input>
-          </div>
-          <p>{this.state.alert}</p>
-          <button type="submit" className="btn btn-primary">Login</button>
-        </form>
-      </div>
+        }
+        { this.state.username &&
+          <Redirect to="/" />
+        }
+        { !this.state.username && !this.state.userLoaded &&
+          // Need to add spinner
+          <div>Loading</div>
+        }
+      </Fragment>
     )
   }
 }

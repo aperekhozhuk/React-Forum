@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import MainPage from './screens/MainPage/MainPage';
 import PostPage from './screens/PostPage/PostPage';
 import NewPostPage from './screens/NewPostPage/NewPostPage';
@@ -42,10 +42,11 @@ class App extends Component {
     );
   }
 
-  setUser(username) {
+  setUser(payload) {
     this.setState({
-      username: username,
-      userLoaded: true
+      username: payload['username'],
+      userLoaded: true,
+      token: payload['access-token']
     })
   }
 
@@ -76,7 +77,12 @@ class App extends Component {
             </Route>
 
             <Route exact path="/posts/new" render={ (props) => (
-              <NewPostPage history={props.history}/>
+              <NewPostPage
+                history={props.history}
+                username={this.state.username}
+                userLoaded={this.state.userLoaded}
+                token={this.state.token}
+              />
             )}>
             </Route>
 
@@ -86,12 +92,21 @@ class App extends Component {
             </Route>
 
             <Route exact path="/login" render={ (props) => (
-              <Login history={props.history} setUser={this.setUser}/>
+              <Login
+                history={props.history}
+                setUser={this.setUser}
+                username={this.state.username}
+                userLoaded={this.state.userLoaded}
+              />
             )}>
             </Route>
 
             <Route exact path="/register" render={ (props) => (
-              <Register history={props.history}/>
+              <Register
+                history={props.history}
+                username={this.state.username}
+                userLoaded={this.state.userLoaded}
+              />
             )}>
             </Route>
 

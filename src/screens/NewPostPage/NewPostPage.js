@@ -1,12 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import { Redirect } from 'react-router-dom';
 
 
 class NewPostPage extends Component {
-  state = {
-    alert: '',
-    token: Cookies.get('access-token')
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: props.username,
+      userLoaded: props.userLoaded,
+      alert: '',
+      token: props.token
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props !== prevProps) {
+      this.setState({
+        username: this.props.username,
+        userLoaded: this.props.userLoaded,
+        token: this.props.token
+      })
+    }
   }
 
   submitForm(e) {
@@ -33,31 +48,38 @@ class NewPostPage extends Component {
 
   render() {
     return (
-      <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            name="title"
-            type="text"
-            className="form-control"
-            placeholder="Enter title"
-            required>
-          </input>
-        </div>
-        <div className="form-group">
-          <label>Text</label>
-          <textarea
-            name="body"
-            type="text"
-            className="form-control"
-            placeholder="Enter text"
-            rows="10"
-            required>
-          </textarea>
-        </div>
-        <p>{this.state.alert}</p>
-        <button type="submit" className="btn btn-primary">Create Post</button>
-      </form>
+      <Fragment>
+        { this.state.username &&
+          <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+            <div className="form-group">
+              <label>Title</label>
+              <input
+                name="title"
+                type="text"
+                className="form-control"
+                placeholder="Enter title"
+                required>
+              </input>
+            </div>
+            <div className="form-group">
+              <label>Text</label>
+              <textarea
+                name="body"
+                type="text"
+                className="form-control"
+                placeholder="Enter text"
+                rows="10"
+                required>
+              </textarea>
+            </div>
+            <p>{this.state.alert}</p>
+            <button type="submit" className="btn btn-primary">Create Post</button>
+          </form>
+        }
+        { !this.state.username &&
+          <Redirect to="/login" />
+        }
+      </Fragment>
     )
   }
 }
