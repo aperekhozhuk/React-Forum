@@ -2,6 +2,10 @@
     padding: 144px 0px 100px 0px;
 }
 
+.spinner {
+    margin: 10em auto;
+    display: flex;
+}
 @media (max-width: 576px) {
     .content {
         padding-top: 200px;
