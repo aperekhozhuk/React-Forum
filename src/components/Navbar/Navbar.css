@@ -7,3 +7,15 @@
     background-color: white;
     color: black;
 }
+
+@media (max-width: 576px) {
+    .nav-bar {
+        flex-direction: column-reverse;
+    }
+    .nav-bar > div {
+        justify-content: space-between !important;
+    }
+    .nav-bar > div:first-child {
+        background-color: grey !important;
+    }
+}

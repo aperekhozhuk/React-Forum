@@ -1,0 +1,12 @@
+
+.nav-buttons {
+    width: 100%;
+    margin: auto;
+    z-index: 1;
+    background-color: white !important;
+}
+
+.nav-buttons > button:hover {
+    background-color: aqua;
+    color: black;
+}
