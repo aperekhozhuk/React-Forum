@@ -21,3 +21,9 @@
     }
 }
 
+@media (max-width: 325px) {
+    .content {
+        padding-top: 214px;
+    }
+}
+

@@ -15,19 +15,22 @@ class MainPage extends Component {
       ],
       page : 1,
       isLoaded: false,
-      next: false
+      next: false,
+      error: false
     }
     this.fetchPosts()
   }
 
   fetchPosts() {
     axios.get(
-      `http://localhost:5000/articles?page=${this.state.page}`
+      `${window.API_URL}/articles?page=${this.state.page}`
     ).then(res => this.setState({
       posts: res.data.articles,
       isLoaded: true,
-      next: res.data.next
+      next: res.data.next,
+      error: false
     }))
+    .catch( error => this.setState({ error: true, isLoaded: true }));
   }
 
   changePage(p) {
@@ -57,16 +60,19 @@ class MainPage extends Component {
             </button>
           ) : (<Fragment></Fragment>)}
         </div>
-        <div>
+        <div className="pt-5">
           { this.state.isLoaded? (
             <Fragment>
-              {/* Show nab buttons on down of page  */}
-              <div className="pt-5">
-                {/* Displaying posts  */}
-                { this.state.posts.map((post) => (
-                  <Post key={post.id} post={post} />
-                ))}
-              </div>
+              { !this.state.error? (
+                <div>
+                  {/* Displaying posts  */}
+                  { this.state.posts.map((post) => (
+                    <Post key={post.id} post={post} />
+                  ))}
+                </div>
+              ) : (
+                <p>{window.SERVER_ERROR_MESSAGE}</p>
+              )}
             </Fragment>
           ) : (
             <p>Loading, please wait ...</p>

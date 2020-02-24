@@ -36,7 +36,7 @@ class App extends Component {
       'Content-Type': 'application/json',
     }
     const data = {'access-token': this.state.token }
-    axios.post('http://localhost:5000/verify-token', data, {
+    axios.post(`${window.API_URL}/verify-token`, data, {
       headers: headers,
     })
     .then(res => this.setState({

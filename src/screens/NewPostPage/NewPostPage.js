@@ -37,7 +37,7 @@ class NewPostPage extends Component {
       'Content-Type': 'application/json',
     }
 
-    axios.post('http://localhost:5000/articles/new', data, {
+    axios.post(`${window.API_URL}/articles/new`, data, {
       headers: headers
     })
     .then(res => this.props.history.push(`/posts/${res.data.id}`))

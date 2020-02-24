@@ -11,7 +11,7 @@ class UserProfile extends Component {
 
   componentDidMount() {
     axios.get(
-      `http://localhost:5000/users/${this.props.match.params.id}`
+      `${window.API_URL}/users/${this.props.match.params.id}`
     ).then(res => this.setState({ profile: res.data, isLoaded: true }))
     .catch( error =>
       this.setState( {error: true})
@@ -22,7 +22,7 @@ class UserProfile extends Component {
     return (
       <div className="container mt-5">
         { this.state.error? (
-          <p>Not found</p>
+          <p>{window.SERVER_ERROR_MESSAGE}</p>
         ) : (
           this.state.isLoaded? (
             <Fragment>

@@ -34,7 +34,7 @@ class Register extends Component {
       'Content-Type': 'application/json',
     }
 
-    axios.post('http://localhost:5000/register', data, {
+    axios.post(`${window.API_URL}/register`, data, {
       headers: headers
     })
     .then( res => this.signup_succes(res) )
@@ -48,7 +48,12 @@ class Register extends Component {
   }
 
   signup_failed(error) {
-    this.setState({ alert: error.response.data.error })
+    let message = ''
+    if (error.response && error.response.data)
+      message = error.response.data['error']
+    else
+      message = window.SERVER_ERROR_MESSAGE
+    this.setState({ alert: message })
   }
 
   render() {

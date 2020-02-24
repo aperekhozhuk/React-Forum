@@ -35,7 +35,7 @@ class Login extends Component {
       'Content-Type': 'application/json',
     }
 
-    axios.post('http://localhost:5000/login', data, {
+    axios.post(`${window.API_URL}/login`, data, {
       headers: headers
     })
     .then(
@@ -53,8 +53,14 @@ class Login extends Component {
   }
 
   login_failed(error) {
-    this.setState({ alert: error.response.data.error })
+    let message = ''
+    if (error.response && error.response.data)
+      message = error.response.data['error']
+    else
+      message = window.SERVER_ERROR_MESSAGE
+    this.setState({ alert: message })
   }
+
   render() {
     return (
       <Fragment>

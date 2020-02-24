@@ -12,7 +12,7 @@ class PostPage extends Component {
 
   componentDidMount() {
     axios.get(
-      `http://localhost:5000/articles/${this.props.match.params.id}`
+      `${window.API_URL}/articles/${this.props.match.params.id}`
     ).then(res => this.setState({ post: res.data, isLoaded: true }))
     .catch( error =>
       this.setState( {error: true})
@@ -23,7 +23,7 @@ class PostPage extends Component {
     return (
       <div className="container mt-5">
         { this.state.error? (
-          <p>Not found</p>
+          <p>{window.SERVER_ERROR_MESSAGE}</p>
         ) : (
           this.state.isLoaded? (
             <Fragment>
