@@ -12,6 +12,7 @@ class NewPostPage extends Component {
       alert: '',
       token: props.token
     }
+    this.submitForm = this.submitForm.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -50,7 +51,7 @@ class NewPostPage extends Component {
     return (
       <Fragment>
         { this.state.username &&
-          <form className="container mt-5" onSubmit={this.submitForm.bind(this)}>
+          <form className="container mt-5" onSubmit={this.submitForm}>
             <div className="form-group">
               <label>Title</label>
               <input

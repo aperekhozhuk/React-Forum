@@ -22,13 +22,73 @@ class Register extends Component {
     }
   }
 
+  // Return 0 if all OK. 1 - if bad username, 2 - if password
+  checkCreds(username, password) {
+    if (
+      username.length < window.MIN_NAME_LEN ||
+      username.length > window.MAX_NAME_LEN
+    ) {
+      return 1
+    }
+    const allowed_symbols = window.CREDS_ALLOWED_SYMBOLS
+    for (let i = 0; i < username.length; i++) {
+      let a = username.charAt(i);
+      if (!(
+        allowed_symbols.low_letters.includes(a) ||
+        allowed_symbols.up_letters.includes(a) ||
+        allowed_symbols.digits.includes(a) ||
+        allowed_symbols.spec_symbols.includes(a)
+      )) {
+        return 1
+      }
+    }
+    let digit = false
+    let up_letter = false
+    let low_letter = false
+    let spec_symbol = false
+    if (
+      password.length < window.MIN_PASS_LEN ||
+      password.length > window.MAX_PASS_LEN
+    ) {
+      return 2
+    }
+    for (let i = 0; i < password.length; i++) {
+      let a = password.charAt(i);
+
+      if (allowed_symbols.low_letters.includes(a)) {
+        low_letter = true
+      } else if (allowed_symbols.up_letters.includes(a)) {
+        up_letter = true
+      } else if (allowed_symbols.digits.includes(a)) {
+        digit = true
+      } else if (allowed_symbols.spec_symbols.includes(a)) {
+        spec_symbol = true
+      } else {
+        return 2
+      }
+    }
+    if (!(digit && up_letter && low_letter && spec_symbol)) {
+      return 2
+    }
+    return 0
+  }
+
   submitForm(e) {
     e.preventDefault();
     this.form = e.target
-
+    const password = e.target.password.value
+    const username = e.target.username.value
+    const ok = (this.checkCreds(username, password))
+    if (ok === 1) {
+      this.setState({ alert: window.UNCORRECT_NAME_MESSAGE })
+      return
+    } else if (ok === 2) {
+      this.setState({ alert: window.WEAK_PASS_MESSAGE })
+      return
+    }
     const data = {
-      'username': e.target.username.value,
-      'password': e.target.password.value
+      'username': username,
+      'password': password
     }
     const headers = {
       'Content-Type': 'application/json',
