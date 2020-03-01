@@ -90,12 +90,9 @@ class Register extends Component {
       'username': username,
       'password': password
     }
-    const headers = {
-      'Content-Type': 'application/json',
-    }
 
     axios.post(`${window.API_URL}/register`, data, {
-      headers: headers
+      headers: window.API_HEADERS
     })
     .then( res => this.signup_succes(res) )
     .catch( error => this.signup_failed(error) );

@@ -4,6 +4,7 @@ import App from './App';
 
 // Keeping project settings
 window.API_URL = 'https://aperekhozhuk.pythonanywhere.com'
+window.API_HEADERS = { 'Content-Type' : 'application/json' }
 window.SERVER_ERROR_MESSAGE = 'Ooops... Sorry, but our server is down'
 window.CREDS_ALLOWED_SYMBOLS = {
   digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],

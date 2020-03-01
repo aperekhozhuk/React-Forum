@@ -34,12 +34,9 @@ class NewPostPage extends Component {
       'text': e.target.body.value,
       'access-token': this.state.token
     }
-    const headers = {
-      'Content-Type': 'application/json',
-    }
 
     axios.post(`${window.API_URL}/articles/new`, data, {
-      headers: headers
+      headers: window.API_HEADERS
     })
     .then(res => this.props.history.push(`/posts/${res.data.id}`))
     .catch( error =>

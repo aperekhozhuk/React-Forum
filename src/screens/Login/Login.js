@@ -31,12 +31,9 @@ class Login extends Component {
       'username': e.target.username.value,
       'password': e.target.password.value
     }
-    const headers = {
-      'Content-Type': 'application/json',
-    }
 
     axios.post(`${window.API_URL}/login`, data, {
-      headers: headers
+      headers: window.API_HEADERS
     })
     .then(
       res => this.login_success(res)

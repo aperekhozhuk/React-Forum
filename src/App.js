@@ -32,12 +32,9 @@ class App extends Component {
     this.setUser = this.setUser.bind(this)
     this.unSetUser = this.unSetUser.bind(this)
 
-    const headers = {
-      'Content-Type': 'application/json',
-    }
     const data = {'access-token': this.state.token }
     axios.post(`${window.API_URL}/verify-token`, data, {
-      headers: headers,
+      headers: window.API_HEADERS
     })
     .then(res => this.setState({
       username: res.data.username,
