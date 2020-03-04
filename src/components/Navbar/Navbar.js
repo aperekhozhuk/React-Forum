@@ -23,16 +23,16 @@ class Navbar extends Component {
 
   render() {
     return (
-      <div className="nav-bar row d-flex bg-dark justify-content-between">
+      <div className="nav-bar row mr-0 d-flex bg-dark justify-content-between">
         { this.state.userLoaded &&
-          <div className="d-flex bg-dark col-12 col-sm-6 justify-content-start">
+          <div className="d-flex pr-0 bg-dark col-12 col-sm-6 justify-content-start">
               <Link className="p-3 text-decoration-none nav-link" to="/">Main Page</Link>
               { this.state.username &&
                 <Link className="p-3 text-decoration-none nav-link" to="/posts/new">Create new post</Link>
               }
           </div>
         }
-        <div className="d-flex bg-dark col-12 col-sm-6 justify-content-end">
+        <div className="d-flex pr-0 bg-dark col-12 col-sm-6 justify-content-end">
           <Authbar
             username={this.state.username}
             userLoaded={this.state.userLoaded}

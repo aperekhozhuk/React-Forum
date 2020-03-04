@@ -68,7 +68,7 @@ class App extends Component {
         It get rid us of useless re-rendering and blinking */}
         { (this.state.userLoaded && !this.state.loading)? (
           <BrowserRouter>
-            <div className="fixed-top">
+            <div>
               <Header />
               <Navbar
                 username={this.state.username}

@@ -37,14 +37,12 @@ class Authbar extends Component {
           </Fragment>
         ) : (
           <Fragment>
-            { this.state.userLoaded? (
+            { this.state.userLoaded &&
               <Fragment>
                 <Link className="p-3 text-decoration-none nav-link" to="/login">Login</Link>
                 <Link className="p-3 text-decoration-none nav-link" to="/register">Register</Link>
               </Fragment>
-            ) : (
-              <Fragment></Fragment>
-            )}
+            }
           </Fragment>
         )
       }

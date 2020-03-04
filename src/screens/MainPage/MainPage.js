@@ -46,7 +46,7 @@ class MainPage extends Component {
   render() {
     return (
       <div className="container">
-        <div className="nav-buttons container px-0 position-fixed bg-primary">
+        <div className="sticky-top nav-buttons container px-0 bg-primary">
           { (this.state.page > 1) &&
             <button
               className="btn btn-primary mr-2"
