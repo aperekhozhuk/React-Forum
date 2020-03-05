@@ -122,6 +122,11 @@ class App extends Component {
                 )}>
                 </Route>
 
+                <Route path="/posts/page/:page([1-9][0-9]*)" render={ (props) => (
+                  <MainPage {...props}/>
+                )}>
+                </Route>
+
                 <Redirect to="/" />
               </Switch>
             </div>

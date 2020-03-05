@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Post from '../../components/Post/Post';
 import axios from 'axios'
 import './MainPage.css'
+import { Link } from 'react-router-dom';
 
 
 class MainPage extends Component {
@@ -9,11 +10,15 @@ class MainPage extends Component {
     super(props)
     this.changePage = this.changePage.bind(this)
     this.fetchPosts = this.fetchPosts.bind(this)
+    let page = 1
+    if (props.match) {
+      page = parseInt(props.match.params.page)
+    }
     this.state = {
       posts: [
 
       ],
-      page : 1,
+      page : page,
       isLoaded: false,
       next: false,
       error: false
@@ -43,32 +48,51 @@ class MainPage extends Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let newPage = 1
+    if (nextProps.match) {
+      newPage = parseInt(nextProps.match.params.page)
+    }
+    if (prevState.page !== newPage) {
+      return {page: newPage}
+    }
+    return null
+  }
+
   render() {
     return (
       <div className="container">
         <div className="sticky-top nav-buttons container px-0 bg-primary">
           { (this.state.page > 1) &&
-            <button
+            <Link
+              to={`/posts/page/${this.state.page - 1}`}
               className="btn btn-primary mr-2"
-              onClick={() => this.changePage(-1)}>Previous Page
-            </button>
+              onClick={() => this.changePage(-1)}
+            >Previous Page</Link>
           }
-          { this.state.next? (
-            <button
+          { this.state.next &&
+            <Link
+              to={`/posts/page/${this.state.page + 1}`}
               className="btn btn-primary"
-              onClick={() => this.changePage(1)}>Next Page
-            </button>
-          ) : (<Fragment></Fragment>)}
+              onClick={() => this.changePage(1)}
+            >Next Page</Link>
+          }
         </div>
         <div className="pt-5">
           { this.state.isLoaded? (
             <Fragment>
               { !this.state.error? (
                 <div>
-                  {/* Displaying posts  */}
-                  { this.state.posts.map((post) => (
-                    <Post key={post.id} post={post} />
-                  ))}
+                  { this.state.posts.length? (
+                    <Fragment>
+                      {/* Displaying posts  */}
+                      { this.state.posts.map((post) => (
+                        <Post key={post.id} post={post} />
+                      ))}
+                    </Fragment>
+                  ) : (
+                    <p>No posts found</p>
+                  )}
                 </div>
               ) : (
                 <p>{window.SERVER_ERROR_MESSAGE}</p>
