@@ -4,7 +4,7 @@ import axios from 'axios'
 
 class UserProfile extends Component {
   state = {
-    profile: {},
+    profile: null,
     error: false,
     isLoaded: false
   }
@@ -13,8 +13,12 @@ class UserProfile extends Component {
     axios.get(
       `${window.API_URL}/users/${this.props.match.params.id}`
     ).then(res => this.setState({ profile: res.data, isLoaded: true }))
-    .catch( error =>
-      this.setState( {error: true})
+    .catch( error => {
+        if (!error.response) {
+          this.setState( {error: true})
+        }
+        this.setState({isLoaded: true})
+      }
     );
   }
 
@@ -25,20 +29,24 @@ class UserProfile extends Component {
           <p>{window.SERVER_ERROR_MESSAGE}</p>
         ) : (
           this.state.isLoaded? (
-            <Fragment>
-              <p>
-                <span className="text-success font-weight-bold">
-                  Username :
-                </span>
-                <span> {this.state.profile.username}</span>
-              </p>
-              <p>
-                <span className="text-success font-weight-bold">
-                  Date of regisatration :
-                </span>
-                <span> {this.state.profile.date_registered}</span>
-              </p>
-            </Fragment>
+            this.state.profile? (
+              <Fragment>
+                <p>
+                  <span className="text-success font-weight-bold">
+                    Username :
+                  </span>
+                  <span> {this.state.profile.username}</span>
+                </p>
+                <p>
+                  <span className="text-success font-weight-bold">
+                    Date of regisatration :
+                  </span>
+                  <span> {this.state.profile.date_registered}</span>
+                </p>
+              </Fragment>
+            ) : (
+              <p>User with id={this.props.match.params.id} not found</p>
+            )
           ) : (
             <p>Loading, please wait</p>
           )

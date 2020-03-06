@@ -44,7 +44,7 @@ class Login extends Component {
   login_success(response) {
     this.form.username.value = ''
     this.form.password.value = ''
-    Cookies.set('access-token', response.data['access-token'])
+    Cookies.set('access-token', response.data['access-token'], {expires: 365})
     this.props.setUser(response.data)
     this.props.history.push("/")
   }

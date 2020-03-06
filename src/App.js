@@ -21,7 +21,8 @@ class App extends Component {
       token: Cookies.get('access-token'),
       username : '',
       userLoaded : false,
-      loading: true
+      loading: true,
+      userId: null
     }
     // Let's start render page at least after some time
     // It get rid us of 25th frame effect while we send authentication request
@@ -38,7 +39,8 @@ class App extends Component {
     })
     .then(res => this.setState({
       username: res.data.username,
-      userLoaded: true
+      userLoaded: true,
+      userId: res.data.id
     }))
     .catch( error =>
       this.setState({userLoaded: true})
@@ -49,7 +51,8 @@ class App extends Component {
     this.setState({
       username: payload['username'],
       userLoaded: true,
-      token: payload['access-token']
+      token: payload['access-token'],
+      userId: payload['user_id']
     })
   }
 
@@ -57,7 +60,8 @@ class App extends Component {
     Cookies.remove('access-token')
     this.setState({
       token: '',
-      username : ''
+      username : '',
+      userId: null
     })
   }
 
@@ -94,7 +98,7 @@ class App extends Component {
                 </Route>
 
                 <Route path="/posts/:id([1-9][0-9]*)" render={ (props) => (
-                  <PostPage {...props}/>
+                  <PostPage userId={this.state.userId} token={this.state.token} {...props}/>
                 )}>
                 </Route>
 
