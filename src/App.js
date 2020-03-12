@@ -97,9 +97,17 @@ class App extends Component {
                 )}>
                 </Route>
 
-                <Route path="/posts/:id([1-9][0-9]*)" render={ (props) => (
-                  <PostPage userId={this.state.userId} token={this.state.token} {...props}/>
-                )}>
+                <Route
+                  exact
+                  path="/posts/:id([1-9][0-9]*)"
+                  render={ (props) => (
+                    <PostPage
+                      userId={this.state.userId}
+                      token={this.state.token}
+                      {...props}
+                    />
+                  )}
+                >
                 </Route>
 
                 <Route exact path="/login" render={ (props) => (
@@ -121,14 +129,28 @@ class App extends Component {
                 )}>
                 </Route>
 
-                <Route path="/users/:id([1-9][0-9]*)" render={ (props) => (
+                <Route
+                  exact
+                  path="/users/:id([1-9][0-9]*)"
+                  render={ (props) => (
                   <UserProfile {...props}/>
                 )}>
                 </Route>
 
-                <Route path="/posts/page/:page([1-9][0-9]*)" render={ (props) => (
+                <Route
+                  exact
+                  path="/posts/page/:page([1-9][0-9]*)" render={ (props) => (
                   <MainPage {...props}/>
                 )}>
+                </Route>
+
+                <Route
+                  exact
+                  path="/users/:user_id([1-9][0-9]*)/posts/page/:page([1-9][0-9]*)"
+                  render={ (props) => (
+                    <MainPage {...props}/>
+                  )}
+                >
                 </Route>
 
                 <Redirect to="/" />

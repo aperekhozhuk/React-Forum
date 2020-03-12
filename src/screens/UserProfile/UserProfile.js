@@ -1,17 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 
 class UserProfile extends Component {
-  state = {
-    profile: null,
-    error: false,
-    isLoaded: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      id: props.match.params.id,
+      profile: null,
+      error: false,
+      isLoaded: false,
+    }
   }
 
   componentDidMount() {
     axios.get(
-      `${window.API_URL}/users/${this.props.match.params.id}`
+      `${window.API_URL}/users/${this.state.id}`
     ).then(res => this.setState({ profile: res.data, isLoaded: true }))
     .catch( error => {
         if (!error.response) {
@@ -43,9 +48,19 @@ class UserProfile extends Component {
                   </span>
                   <span> {this.state.profile.date_registered}</span>
                 </p>
+                <Link
+                  to={`/users/${this.state.id}/posts/page/1`}
+                  className="text-decoration-none"
+                >
+                  <h4>Posts of&nbsp;
+                    <span className="font-italic font-weight-bold">
+                      {this.state.profile.username}
+                    </span>
+                  </h4>
+                </Link>
               </Fragment>
             ) : (
-              <p>User with id={this.props.match.params.id} not found</p>
+              <p>User with id={this.state.id} not found</p>
             )
           ) : (
             <p>Loading, please wait</p>
