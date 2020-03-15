@@ -31,20 +31,24 @@ class Login extends Component {
       'username': e.target.username.value,
       'password': e.target.password.value
     }
-
+    const remember = e.target.remember.checked
     axios.post(`${window.API_URL}/login`, data, {
       headers: window.API_HEADERS
     })
     .then(
-      res => this.login_success(res)
+      res => this.login_success(res, remember)
     )
     .catch( error => this.login_failed(error));
   }
 
-  login_success(response) {
+  login_success(response, remember) {
     this.form.username.value = ''
     this.form.password.value = ''
-    Cookies.set('access-token', response.data['access-token'], {expires: 365})
+    let params = {}
+    if (remember) {
+      params = {expires: 365}
+    }
+    Cookies.set('access-token', response.data['access-token'], params)
     this.props.setUser(response.data)
     this.props.history.push("/")
   }
@@ -85,6 +89,21 @@ class Login extends Component {
                   placeholder="Enter your password"
                   required>
                 </input>
+              </div>
+              <div className="form-group">
+                <input
+                  name="remember"
+                  type="checkbox"
+                  defaultChecked>
+                </input>
+                <span
+                  className="ml-2"
+                  onMouseOver={(e) => {
+                    e.target.innerHTML = `If omitted - your session will \
+                    be dropped after browser closing`
+                  }}
+                  onMouseOut={(e) => {e.target.innerHTML = 'Remember me'}}
+                >Remember me</span>
               </div>
               <p>{this.state.alert}</p>
               <button type="submit" className="btn btn-primary">Login</button>

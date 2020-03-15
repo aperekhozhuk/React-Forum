@@ -30,7 +30,7 @@ window.UNCORRECT_NAME_MESSAGE = `Your name should be >=5 and <=20\
   in length. It can contain English letters, digits and special symbols\
   (${window.CREDS_ALLOWED_SYMBOLS.spec_symbols})`
 window.WEAK_PASS_MESSAGE = `Your password should be >=8 and <=40\
-  in length. It can contain English letters, digits and special symbols\
+  in length. It can contain English letters, digits and special symbols.\
   It should contain at least 1 lower-case, 1 upper-case letter,1 digit\
   and one special symbol (${window.CREDS_ALLOWED_SYMBOLS.spec_symbols})`
 
