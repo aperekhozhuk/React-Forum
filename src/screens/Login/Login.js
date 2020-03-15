@@ -10,7 +10,8 @@ class Login extends Component {
     this.state = {
       alert: '',
       username: props.username,
-      userLoaded: props.userLoaded
+      userLoaded: props.userLoaded,
+      formSubmitting: false
     }
   }
 
@@ -25,6 +26,11 @@ class Login extends Component {
 
   submitForm(e) {
     e.preventDefault();
+    // If form submitting in processing - wait
+    if (this.state.formSubmitting) {
+      return
+    }
+    this.setState({formSubmitting: true})
     this.form = e.target
 
     const data = {
@@ -50,6 +56,7 @@ class Login extends Component {
     }
     Cookies.set('access-token', response.data['access-token'], params)
     this.props.setUser(response.data)
+    this.setState({formSubmitting: false})
     this.props.history.push("/")
   }
 
@@ -59,7 +66,7 @@ class Login extends Component {
       message = error.response.data['error']
     else
       message = window.SERVER_ERROR_MESSAGE
-    this.setState({ alert: message })
+    this.setState({ alert: message, formSubmitting: false})
   }
 
   render() {

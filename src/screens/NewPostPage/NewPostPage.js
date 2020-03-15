@@ -10,7 +10,8 @@ class NewPostPage extends Component {
       username: props.username,
       userLoaded: props.userLoaded,
       alert: '',
-      token: props.token
+      token: props.token,
+      formSubmitting: false
     }
     this.submitForm = this.submitForm.bind(this)
   }
@@ -27,7 +28,11 @@ class NewPostPage extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    this.setState({alert: ''})
+    // If form submitting in processing - wait
+    if (this.state.formSubmitting) {
+      return
+    }
+    this.setState({alert: '', formSubmitting: true})
 
     const data = {
       'title': e.target.title.value,
@@ -38,9 +43,12 @@ class NewPostPage extends Component {
     axios.post(`${window.API_URL}/articles/new`, data, {
       headers: window.API_HEADERS
     })
-    .then(res => this.props.history.push(`/posts/${res.data.id}`))
+    .then(res => {
+      this.setState({formSubmitting: false})
+      this.props.history.push(`/posts/${res.data.id}`)
+    })
     .catch( error =>
-      this.setState({alert: error.response.data.error})
+      this.setState({alert: error.response.data.error, formSubmitting: false})
     );
   }
 

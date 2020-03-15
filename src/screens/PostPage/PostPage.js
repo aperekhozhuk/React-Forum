@@ -15,7 +15,9 @@ class PostPage extends Component {
       token: props.token,
       alert: '',
       deleteAlert: '',
-      currentUserId: props.userId
+      currentUserId: props.userId,
+      deletingProcessing: false,
+      editingProcessing: false
     }
     this.editPost = this.editPost.bind(this)
     this.deletePost = this.deletePost.bind(this)
@@ -39,6 +41,10 @@ class PostPage extends Component {
   }
 
   deletePost() {
+    if (this.state.deletingProcessing) {
+      return
+    }
+    this.setState({deletingProcessing: true})
     let data = {'access-token': this.state.token}
     axios.delete(
       `${window.API_URL}/articles/${this.props.match.params.id}/delete`,
@@ -48,6 +54,7 @@ class PostPage extends Component {
       setTimeout(() => {this.props.history.push("/")}, 1000)
     })
     .catch(error => {
+      this.setState({deletingProcessing: false})
       if (error.response) {
         this.setState({deleteAlert: error.response.data.error})
       } else {
@@ -56,8 +63,13 @@ class PostPage extends Component {
     })
   }
 
+  // Handle form for editing
   submitForm(e) {
     e.preventDefault()
+    if (this.state.editingProcessing) {
+      return
+    }
+    this.setState({editingProcessing: true})
     let data = {
       'title': e.target.title.value,
       'text': e.target.text.value,
@@ -68,9 +80,14 @@ class PostPage extends Component {
       data, {headers: window.API_HEADERS}
     )
     .then(res => {
-      this.setState({ post: res.data, editing:false })
+      this.setState({
+        post: res.data,
+        editing:false,
+        editingProcessing: false
+      })
     })
     .catch(error => {
+      this.setState({editingProcessing: false})
       if (error.response) {
         this.setState({alert: error.response.data.error})
       } else {

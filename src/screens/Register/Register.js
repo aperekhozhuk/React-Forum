@@ -9,7 +9,8 @@ class Register extends Component {
     this.state = {
       alert: '',
       username: props.username,
-      userLoaded: props.userLoaded
+      userLoaded: props.userLoaded,
+      formSubmitting: false
     }
   }
 
@@ -75,6 +76,11 @@ class Register extends Component {
 
   submitForm(e) {
     e.preventDefault();
+    // If form submitting in processing - wait
+    if (this.state.formSubmitting) {
+      return
+    }
+    this.setState({formSubmitting: true})
     this.form = e.target
     const password = e.target.password.value
     const username = e.target.username.value
@@ -101,6 +107,7 @@ class Register extends Component {
   signup_succes(response) {
     this.form.username.value = ''
     this.form.password.value = ''
+    this.setState({formSubmitting: false})
     this.props.history.push("/login")
   }
 
@@ -110,7 +117,7 @@ class Register extends Component {
       message = error.response.data['error']
     else
       message = window.SERVER_ERROR_MESSAGE
-    this.setState({ alert: message })
+    this.setState({ alert: message, formSubmitting: false})
   }
 
   render() {
