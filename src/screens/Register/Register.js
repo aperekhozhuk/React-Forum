@@ -25,53 +25,15 @@ class Register extends Component {
 
   // Return 0 if all OK. 1 - if bad username, 2 - if password
   checkCreds(username, password) {
-    if (
-      username.length < window.MIN_NAME_LEN ||
-      username.length > window.MAX_NAME_LEN
-    ) {
+    let username_regex = window.USERNAME_REGEX
+    let password_regex = window.PASSWORD_REGEX
+    if (!(username_regex.test(username))) {
       return 1
-    }
-    const allowed_symbols = window.CREDS_ALLOWED_SYMBOLS
-    for (let i = 0; i < username.length; i++) {
-      let a = username.charAt(i);
-      if (!(
-        allowed_symbols.low_letters.includes(a) ||
-        allowed_symbols.up_letters.includes(a) ||
-        allowed_symbols.digits.includes(a) ||
-        allowed_symbols.spec_symbols.includes(a)
-      )) {
-        return 1
-      }
-    }
-    let digit = false
-    let up_letter = false
-    let low_letter = false
-    let spec_symbol = false
-    if (
-      password.length < window.MIN_PASS_LEN ||
-      password.length > window.MAX_PASS_LEN
-    ) {
+    } else if (!(password_regex.test(password))) {
       return 2
+    } else {
+      return 0;
     }
-    for (let i = 0; i < password.length; i++) {
-      let a = password.charAt(i);
-
-      if (allowed_symbols.low_letters.includes(a)) {
-        low_letter = true
-      } else if (allowed_symbols.up_letters.includes(a)) {
-        up_letter = true
-      } else if (allowed_symbols.digits.includes(a)) {
-        digit = true
-      } else if (allowed_symbols.spec_symbols.includes(a)) {
-        spec_symbol = true
-      } else {
-        return 2
-      }
-    }
-    if (!(digit && up_letter && low_letter && spec_symbol)) {
-      return 2
-    }
-    return 0
   }
 
   submitForm(e) {
@@ -80,7 +42,6 @@ class Register extends Component {
     if (this.state.formSubmitting) {
       return
     }
-    this.setState({formSubmitting: true})
     this.form = e.target
     const password = e.target.password.value
     const username = e.target.username.value
@@ -97,6 +58,7 @@ class Register extends Component {
       'password': password
     }
 
+    this.setState({formSubmitting: true})
     axios.post(`${window.API_URL}/register`, data, {
       headers: window.API_HEADERS
     })
