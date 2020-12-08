@@ -10,8 +10,12 @@ window.SERVER_ERROR_MESSAGE = 'Ooops... Sorry, but our server is down'
 window.CREDS_ALLOWED_SPEC_SYMBOLS = [
   '!', '@', '#', '$', '%', '^', '&', '*', '-', '_'
 ]
-window.PASSWORD_REGEX = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*\\-_]).{8,40}");
-window.USERNAME_REGEX = new RegExp("^[A-Za-z\\d!@#$%^&*\\-_]{5,20}$");
+window.PASSWORD_REGEX = new RegExp(
+  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*\\-_])[A-Za-z0-9!@#$%^&*\\-_]{8,40}$"
+);
+window.USERNAME_REGEX = new RegExp(
+  "^[A-Za-z0-9!@#$%^&*\\-_]{5,20}$"
+);
 
 window.UNCORRECT_NAME_MESSAGE = `Your name should be >=5 and <=20\
   in length. It can contain English letters, digits and special symbols\
